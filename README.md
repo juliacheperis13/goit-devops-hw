@@ -1,4 +1,4 @@
-# Terraform AWS Infrastructure – Lesson 5
+# Terraform AWS Infrastructure 
 
 This project creates a basic AWS infrastructure using Terraform. It includes state file management with S3 and DynamoDB, a VPC network setup, and an Elastic Container Registry (ECR) for Docker image storage.
 
