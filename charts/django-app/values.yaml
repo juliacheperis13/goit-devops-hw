@@ -1,6 +1,6 @@
 image:
   repository: 498777148926.dkr.ecr.us-east-1.amazonaws.com/lesson-5-ecr
-  tag: latest
+  tag: v1.0.11
   pullPolicy: IfNotPresent
 
 service:
