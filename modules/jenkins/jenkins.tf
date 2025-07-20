@@ -119,9 +119,6 @@ jobs:
             branches("*/lesson-8-9")
           }
         }
-         triggers {
-          githubPush()
-        }
         steps {
           dsl {
             text('''
@@ -138,9 +135,6 @@ jobs:
                       }
                     }
                   }
-                }
-                triggers {
-                  githubPush()
                 }
               }
             ''')
