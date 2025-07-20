@@ -60,7 +60,7 @@ spec:
               echo $USERNAME
               git clone https://$USERNAME:$PASSWORD@github.com/juliacheperis13/goit-devops-hw.git
               set -x
-              cd devops
+              cd goit-devops-hw
               git checkout lesson-8-9
               cd charts/django-app
 
