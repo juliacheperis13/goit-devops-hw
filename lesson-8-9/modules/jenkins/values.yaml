@@ -1,4 +1,4 @@
- controller:
+controller:
   admin:
     username: admin
     password: admin123
@@ -34,8 +34,8 @@
     - job-dsl:latest
 
   serviceAccount:
-     name: jenkins-sa
-     create: false
+    name: jenkins-sa
+    create: false
 
   JCasC:
     configScripts:
@@ -73,7 +73,7 @@
                             scm {
                               git {
                                 remote {
-                                  url('${github_repo_url}')
+                                  url("${github_repo_url}")
                                   credentials("github-token")
                                 }
                                 branches("*/lesson-8-9")
