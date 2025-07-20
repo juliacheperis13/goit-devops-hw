@@ -47,8 +47,8 @@ controller:
                   - usernamePassword:
                       scope: GLOBAL
                       id: github-token
-                      username: ${github_user}
-                      password: ${github_pat}
+                      username: juliacheperis13
+                      password: 
                       description: GitHub PAT
       seed-job: |
         jobs:
@@ -58,7 +58,7 @@ controller:
                 scm {
                   git {
                     remote {
-                      url('${github_repo_url}')
+                      url('https://github.com/juliacheperis13/goit-devops-hw.git')
                       credentials('github-token')
                     }
                     branches('*/lesson-8-9')
@@ -73,7 +73,7 @@ controller:
                             scm {
                               git {
                                 remote {
-                                  url("${github_repo_url}")
+                                  url("https://github.com/juliacheperis13/goit-devops-hw.git")
                                   credentials("github-token")
                                 }
                                 branches("*/lesson-8-9")
