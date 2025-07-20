@@ -83,11 +83,14 @@ resource "helm_release" "jenkins" {
   version          = "5.8.27"
   create_namespace = true
 
-  values = [file("${path.module}/values.yaml")]
+  values = [
+    file("${path.module}/values.yaml")
+  ]
 
-  set_sensitive = {
-    name  = "controller.JCasC.configScripts.credentials"
-    value = <<EOT
+  set = [
+    {
+      name  = "controller.JCasC.configScripts.credentials"
+      value = <<EOT
 credentials:
   system:
     domainCredentials:
@@ -95,15 +98,14 @@ credentials:
           - usernamePassword:
               scope: GLOBAL
               id: github-token
-              username: ${local.github_user}
-              password: ${local.github_pat}
+              username: ${var.github_user}
+              password: ${var.github_pat}
               description: GitHub PAT
 EOT
-  }
-
-  set = {
-    name  = "controller.JCasC.configScripts.seed-job"
-    value = <<EOT
+    },
+    {
+      name  = "controller.JCasC.configScripts.seed-job"
+      value = <<EOT
 jobs:
   - script: >
       job('seed-job') {
@@ -111,10 +113,10 @@ jobs:
         scm {
           git {
             remote {
-              url('${local.github_repo_url}')
-              credentials('github-token')
+              url("${var.github_repo_url}")
+              credentials("github-token")
             }
-            branches('*/lesson-8-9')
+            branches("*/lesson-8-9")
           }
         }
         steps {
@@ -126,7 +128,7 @@ jobs:
                     scm {
                       git {
                         remote {
-                          url("${local.github_repo_url}")
+                          url("${var.github_repo_url}")
                           credentials("github-token")
                         }
                         branches("*/lesson-8-9")
@@ -140,8 +142,8 @@ jobs:
         }
       }
 EOT
-  }
-
-  depends_on = [aws_iam_role_policy.jenkins_ecr_policy]
+    }
+  ]
 }
+
 
