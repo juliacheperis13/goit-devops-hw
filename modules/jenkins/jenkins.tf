@@ -83,7 +83,65 @@ resource "helm_release" "jenkins" {
   version          = "5.8.27"
   create_namespace = true
 
-  values = [
-    file("${path.module}/values.yaml")
-  ]
+  values = [file("${path.module}/values.yaml")]
+
+  set_sensitive = {
+    name  = "controller.JCasC.configScripts.credentials"
+    value = <<EOT
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              scope: GLOBAL
+              id: github-token
+              username: ${local.github_user}
+              password: ${local.github_pat}
+              description: GitHub PAT
+EOT
+  }
+
+  set = {
+    name  = "controller.JCasC.configScripts.seed-job"
+    value = <<EOT
+jobs:
+  - script: >
+      job('seed-job') {
+        description('Job to generate pipeline for Django project')
+        scm {
+          git {
+            remote {
+              url('${local.github_repo_url}')
+              credentials('github-token')
+            }
+            branches('*/lesson-8-9')
+          }
+        }
+        steps {
+          dsl {
+            text('''
+              pipelineJob("goit-django-docker") {
+                definition {
+                  cpsScm {
+                    scm {
+                      git {
+                        remote {
+                          url("${local.github_repo_url}")
+                          credentials("github-token")
+                        }
+                        branches("*/lesson-8-9")
+                      }
+                    }
+                  }
+                }
+              }
+            ''')
+          }
+        }
+      }
+EOT
+  }
+
+  depends_on = [aws_iam_role_policy.jenkins_ecr_policy]
 }
+

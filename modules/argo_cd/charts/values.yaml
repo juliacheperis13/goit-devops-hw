@@ -20,8 +20,8 @@ applications:
 repositories:
   - name: example-app
     url: https://github.com/juliacheperis13/goit-devops-hw.git
-    username: juliacheperis13
-    password: 
+    username: ${github_user}
+    password: ${github_pat}
 
 repoConfig:
   insecure: "true"

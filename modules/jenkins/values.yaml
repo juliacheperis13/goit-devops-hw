@@ -37,7 +37,7 @@ controller:
     name: jenkins-sa
     create: false
 
-  JCasC:
+  # JCasC:
     configScripts:
       credentials: |
         credentials:
@@ -48,7 +48,7 @@ controller:
                       scope: GLOBAL
                       id: github-token
                       username: juliacheperis13
-                      password: 
+                      password: ghp_8xuubtSpz05CvYAUTBFNDeofd6ry3TXHo
                       description: GitHub PAT
       seed-job: |
         jobs:

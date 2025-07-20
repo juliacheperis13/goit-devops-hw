@@ -1,7 +1,7 @@
 pipeline {
   agent {
     kubernetes {
-      yaml """
+      yaml '''
 apiVersion: v1
 kind: Pod
 metadata:
@@ -17,17 +17,22 @@ spec:
         - sleep
       args:
         - 99d
-"""
+    - name: git
+      image: alpine/git
+      command:
+        - cat
+      tty: true
+'''
     }
   }
 
   environment {
-    ECR_REGISTRY = "498777148926.dkr.ecr.us-east-1.amazonaws.com"
-    IMAGE_NAME   = "lesson-5-ecr"
+    ECR_REGISTRY = '498777148926.dkr.ecr.us-east-1.amazonaws.com'
+    IMAGE_NAME   = 'lesson-5-ecr'
     IMAGE_TAG    = "v1.0.${BUILD_NUMBER}"
 
-    COMMIT_EMAIL = "jenkins@localhost"
-    COMMIT_NAME  = "jenkins"
+    COMMIT_EMAIL = 'jenkins@localhost'
+    COMMIT_NAME  = 'jenkins'
   }
 
   stages {
@@ -35,50 +40,29 @@ spec:
       steps {
         container('kaniko') {
           sh '''
-        /kaniko/executor \
-          --context `pwd`/charts/django-app/django \
-          --dockerfile `pwd`/charts/django-app/django/Dockerfile \
-          --destination=$ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG \
-          --cache=true \
-          --insecure \
-          --skip-tls-verify
+            /kaniko/executor \
+              --context `pwd`/charts/django-app/django \
+              --dockerfile `pwd`/charts/django-app/django/Dockerfile \
+              --destination=$ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG \
+              --cache=true \
+              --insecure \
+              --skip-tls-verify
           '''
         }
       }
     }
-  }
 
-    // stage('Update Chart Tag in Git') {
-    //   steps {
-    //     container('git') {
-    //       withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: ${github_user}, passwordVariable: ${github_pat})]) {
-    //         sh '''
-    //           git clone https://${github_user}:${github_pat}@github.com/${github_user}/devops.git
-    //           git checkout -b lesson-9
-    //           cd devops/charts/django-app
-
-    //           sed -i "s/tag: .*/tag: $IMAGE_TAG/" values.yaml
-
-    //           git config user.email "$COMMIT_EMAIL"
-    //           git config user.name "$COMMIT_NAME"
-
-    //           git add values.yaml
-    //           git commit -m "Update image tag to $IMAGE_TAG"
-    //           git push origin lesson-9
-    //         '''
-    //       }
-    //     }
-    //   }
-    // }
-
-   stage('Update Chart Tag in Git') {
+    stage('Update Chart Tag in Git') {
       steps {
         container('git') {
-          withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: ${github_user}, passwordVariable: ${github_pat})]) {
+          withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             sh '''
-               git clone https://${github_user}:${github_pat}@github.com/${github_user}/devops.git
-              git checkout -b lesson-8-9
-              cd devops/charts/django-app
+              echo $USERNAME
+              git clone https://$USERNAME:$PASSWORD@github.com/juliacheperis13/goit-devops-hw.git
+              set -x
+              cd devops
+              git checkout lesson-8-9
+              cd charts/django-app
 
               sed -i "s/tag: .*/tag: $IMAGE_TAG/" values.yaml
 
@@ -93,4 +77,5 @@ spec:
         }
       }
     }
+  }
 }
