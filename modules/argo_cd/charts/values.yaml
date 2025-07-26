@@ -5,7 +5,7 @@ applications:
     source:
       repoURL: https://github.com/juliacheperis13/goit-devops-hw.git
       path: charts/django-app 
-      targetRevision: lesson-8-9
+      targetRevision: lesson-db-module
       helm:
         valueFiles:
           - values.yaml

@@ -1,0 +1,29 @@
+alertmanager:
+  enabled: false
+
+pushgateway:
+  enabled: false
+
+kubeStateMetrics:
+  enabled: true
+
+nodeExporter:
+  enabled: true
+
+server:
+  service:
+    type: ClusterIP
+    port: 80
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
+      memory: 512Mi
+      cpu: 200m
+
+  persistentVolume:
+    enabled: true
+    size: 4Gi
+    storageClass: gp2
