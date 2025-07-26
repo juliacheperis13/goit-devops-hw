@@ -145,6 +145,48 @@ The `goit-django-docker` job will:
 
 Check the status of the application — it should be **Healthy** and **Synced**.
 
+## RDS Module Overview
+
+This module provisions a fully managed PostgreSQL database, either as a standard RDS instance or as an Aurora cluster, depending on configuration.
+
+By default, it creates a PostgreSQL RDS instance.
+
+To create an Aurora cluster instead, set:
+
+```
+use_aurora = true
+```
+
+The module supports configuration of both types, including engine version, instance class, subnet selection, storage, and parameter groups.
+
+
+## 📊 Monitoring (Prometheus + Grafana)
+
+This module deploys a basic monitoring stack to Kubernetes:
+
+- **Prometheus** for metrics collection  
+- **Grafana** for dashboards  
+- Preconfigured data source and dashboards  
+- No domain required (access via NodePort or port-forward)  
+
+### 🚀 Access
+
+#### Grafana
+
+```bash
+kubectl port-forward svc/grafana 8080:80 -n monitoring
+```
+
+Then open: http://localhost:8080
+**Login:** `admin`\
+**Password:** `admin123`
+
+#### Prometeus
+
+```bash
+kubectl port-forward svc/prometheus-server 9090:80 -n monitoring
+```
+Then open: http://localhost:9090
 
 ### Deploy Manually (Optional)
 
