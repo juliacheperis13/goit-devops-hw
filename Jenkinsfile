@@ -61,7 +61,7 @@ spec:
               git clone https://$USERNAME:$PASSWORD@github.com/juliacheperis13/goit-devops-hw.git
               set -x
               cd goit-devops-hw
-              git checkout lesson-db-module
+              git checkout final-project
               cd charts/django-app
 
               sed -i "s/tag: .*/tag: $IMAGE_TAG/" values.yaml
@@ -71,7 +71,7 @@ spec:
 
               git add values.yaml
               git commit -m "Update image tag to $IMAGE_TAG"
-              git push origin lesson-db-module
+              git push origin final-project
             '''
           }
         }

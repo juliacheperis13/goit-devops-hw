@@ -61,7 +61,7 @@ controller:
                       url('https://github.com/juliacheperis13/goit-devops-hw.git')
                       credentials('github-token')
                     }
-                    branches('*/lesson-db-module')
+                    branches('*/final-project')
                   }
                 }
                 steps {
@@ -76,7 +76,7 @@ controller:
                                   url("https://github.com/juliacheperis13/goit-devops-hw.git")
                                   credentials("github-token")
                                 }
-                                branches("*/lesson-db-module")
+                                branches("*/final-project")
                               }
                             }
                           }
