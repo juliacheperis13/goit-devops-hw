@@ -116,7 +116,7 @@ jobs:
               url("${var.github_repo_url}")
               credentials("github-token")
             }
-            branches("*/lesson-db-module")
+            branches("*/final-project")
           }
         }
         steps {
@@ -131,7 +131,7 @@ jobs:
                           url("${var.github_repo_url}")
                           credentials("github-token")
                         }
-                        branches("*/lesson-db-module")
+                        branches("*/final-project")
                       }
                     }
                   }
